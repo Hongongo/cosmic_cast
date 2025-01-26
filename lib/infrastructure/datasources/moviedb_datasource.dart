@@ -1,9 +1,10 @@
+import 'package:dio/dio.dart';
+
 import 'package:cosmic_cast/config/constants/environment.dart';
 import 'package:cosmic_cast/domain/datasources/movies_datasource.dart';
 import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'package:cosmic_cast/infrastructure/mappers/movie_mapper.dart';
 import 'package:cosmic_cast/infrastructure/models/moviedb/moviedb_response.dart';
-import 'package:dio/dio.dart';
 
 class MoviedbDatasource extends MoviesDataSource {
   final dio = Dio(

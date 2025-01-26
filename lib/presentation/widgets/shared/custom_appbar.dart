@@ -17,7 +17,7 @@ class CustomAppbar extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.movie_outlined,
+                Icons.movie_filter,
                 color: colors.primary,
               ),
               const SizedBox(

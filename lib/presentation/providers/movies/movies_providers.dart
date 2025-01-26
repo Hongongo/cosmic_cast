@@ -1,6 +1,7 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'package:cosmic_cast/presentation/providers/movies/movies_repository_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //* now playing movies provider
 final nowPlayingMoviesProvider =
