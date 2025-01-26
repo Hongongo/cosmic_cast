@@ -45,6 +45,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
 
+    return FullScreenLoader();
+
     return CustomScrollView(
       slivers: [
         //* sliver app bar
@@ -79,9 +81,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     movies: upcomingMovies,
                     title: 'Próximamente',
                     subtitle: 'En este mes',
-                    loadNextPage: ref
-                        .read(upcomingMoviesProvider.notifier)
-                        .loadNextPage,
+                    loadNextPage:
+                        ref.read(upcomingMoviesProvider.notifier).loadNextPage,
                   ),
 
                   //* populares
@@ -89,9 +90,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     movies: popularMovies,
                     title: 'Populares',
                     // subtitle: 'Lunes 20',
-                    loadNextPage: ref
-                        .read(popularMoviesProvider.notifier)
-                        .loadNextPage,
+                    loadNextPage:
+                        ref.read(popularMoviesProvider.notifier).loadNextPage,
                   ),
 
                   //* mejor calificadas
@@ -99,9 +99,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                     movies: topRatedMovies,
                     title: 'Mejor calificadas',
                     subtitle: 'De todos los tiempos',
-                    loadNextPage: ref
-                        .read(topRatedMoviesProvider.notifier)
-                        .loadNextPage,
+                    loadNextPage:
+                        ref.read(topRatedMoviesProvider.notifier).loadNextPage,
                   ),
 
                   const SizedBox(
