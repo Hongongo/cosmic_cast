@@ -45,8 +45,17 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
       body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
         slivers: [
+          //* sliver appbar
           _CustomSliverAppbar(
             movie: movie,
+          ),
+
+          //* sliver list
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => _MovieDetails(movie: movie),
+              childCount: 1,
+            ),
           ),
         ],
       ),
@@ -126,6 +135,84 @@ class _CustomSliverAppbar extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MovieDetails extends StatelessWidget {
+  final Movie movie;
+  const _MovieDetails({required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final textStyles = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //* imagen del poster
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  movie.posterPath,
+                  width: size.width * 0.3,
+                ),
+              ),
+
+              const SizedBox(
+                width: 10,
+              ),
+
+              //* overview
+              SizedBox(
+                width: (size.width - 40) * 0.7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      movie.title,
+                      style: textStyles.titleLarge,
+                    ),
+                    Text(movie.overview),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        //* generos de la pelicula
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Wrap(
+            children: [
+              ...movie.genreIds.map(
+                (gender) => Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: Chip(
+                    label: Text(gender),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // TODO: agregar actores
+
+        const SizedBox(
+          height: 100,
+        ),
+      ],
     );
   }
 }
