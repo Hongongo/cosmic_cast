@@ -10,6 +10,16 @@ final movieInfoProvider =
   return MovieMapNotifier(getMovie: movieRepository.getMovieById);
 });
 
+/*
+  {
+  '802340': Movie(),
+  '802341': Movie(),
+  '802342': Movie(),
+  '802343': Movie(),
+  }
+
+*/
+
 typedef GetMovieCallback = Future<Movie> Function(String movieId);
 
 class MovieMapNotifier extends StateNotifier<Map<String, Movie>> {
@@ -21,7 +31,6 @@ class MovieMapNotifier extends StateNotifier<Map<String, Movie>> {
 
   Future<void> loadMovie(String id) async {
     if (state[id] != null) return;
-    print('realizando peticon http');
     final movie = await getMovie(id);
 
     state = {...state, id: movie}; // => {'$id': movie} como entry del mapa
