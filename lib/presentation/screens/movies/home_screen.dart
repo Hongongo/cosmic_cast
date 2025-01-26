@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text(
-          Environment.movieDbKey,
+          Environment.theMovieDbKey,
         ),
       ),
     );
