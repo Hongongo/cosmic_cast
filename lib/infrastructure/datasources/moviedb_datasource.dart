@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import 'package:cosmic_cast/infrastructure/models/moviedb/movie_details.dart';
 import 'package:cosmic_cast/config/constants/environment.dart';
 import 'package:cosmic_cast/domain/datasources/movies_datasource.dart';
 import 'package:cosmic_cast/domain/entities/movie.dart';
@@ -35,7 +36,7 @@ class MoviedbDatasource extends MoviesDataSource {
     final response = await dio.get('/movie/now_playing', queryParameters: {
       'page': page,
     });
-    
+
     return _jsonToMovies(response.data);
   }
 
@@ -47,22 +48,35 @@ class MoviedbDatasource extends MoviesDataSource {
 
     return _jsonToMovies(response.data);
   }
-  
+
   @override
-  Future<List<Movie>> getTopRated({int page = 1})async {
+  Future<List<Movie>> getTopRated({int page = 1}) async {
     final response = await dio.get('/movie/top_rated', queryParameters: {
       'page': page,
     });
 
     return _jsonToMovies(response.data);
   }
-  
+
   @override
-  Future<List<Movie>> getUpcoming({int page = 1})async {
+  Future<List<Movie>> getUpcoming({int page = 1}) async {
     final response = await dio.get('/movie/upcoming', queryParameters: {
       'page': page,
     });
 
     return _jsonToMovies(response.data);
+  }
+
+  @override
+  Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
+    if (response.statusCode != 200) {
+      throw Exception('Movie with id: $id not found');
+    }
+
+    final movieDetails = MovieDetails.fromJson(response.data);
+    final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
+
+    return movie;
   }
 }
