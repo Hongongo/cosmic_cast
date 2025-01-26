@@ -33,6 +33,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
     ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
@@ -40,6 +42,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideShowProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
 
     return CustomScrollView(
       slivers: [
@@ -72,11 +76,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
                   //* proximamente
                   MovieHorizontalListView(
-                    movies: nowPlayingMovies,
+                    movies: upcomingMovies,
                     title: 'Próximamente',
                     subtitle: 'En este mes',
                     loadNextPage: ref
-                        .read(nowPlayingMoviesProvider.notifier)
+                        .read(upcomingMoviesProvider.notifier)
                         .loadNextPage,
                   ),
 
@@ -90,13 +94,13 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                         .loadNextPage,
                   ),
 
-                  //* populares
+                  //* mejor calificadas
                   MovieHorizontalListView(
-                    movies: nowPlayingMovies,
+                    movies: topRatedMovies,
                     title: 'Mejor calificadas',
                     subtitle: 'De todos los tiempos',
                     loadNextPage: ref
-                        .read(nowPlayingMoviesProvider.notifier)
+                        .read(topRatedMoviesProvider.notifier)
                         .loadNextPage,
                   ),
 
