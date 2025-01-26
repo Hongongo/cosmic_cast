@@ -1,13 +1,3 @@
-// To parse this JSON data, do
-//
-//     final creditsResponse = creditsResponseFromJson(jsonString);
-
-import 'dart:convert';
-
-CreditsResponse creditsResponseFromJson(String str) => CreditsResponse.fromJson(json.decode(str));
-
-String creditsResponseToJson(CreditsResponse data) => json.encode(data.toJson());
-
 class CreditsResponse {
     final int id;
     final List<Cast> cast;
