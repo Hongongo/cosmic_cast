@@ -1,6 +1,6 @@
-import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'movies_providers.dart';
 
 final moviesSlideShowProvider = Provider<List<Movie>>((ref) {

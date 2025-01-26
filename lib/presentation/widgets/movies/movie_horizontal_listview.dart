@@ -1,6 +1,8 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
+import 'package:animate_do/animate_do.dart';
+
+import 'package:cosmic_cast/config/helpers/human_formats.dart';
 import '../../../domain/entities/movie.dart';
 
 class MovieHorizontalListView extends StatelessWidget {
@@ -115,7 +117,7 @@ class _Slide extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                '${movie.popularity}',
+                HumanFormats.number(movie.popularity),
                 style: textStyles.bodySmall,
               ),
             ],
