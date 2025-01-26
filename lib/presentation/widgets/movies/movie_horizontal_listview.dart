@@ -55,7 +55,7 @@ class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350,
+      height: 360,
       child: Column(
         children: [
           if (widget.title != null || widget.subtitle != null)
@@ -63,6 +63,9 @@ class _MovieHorizontalListViewState extends State<MovieHorizontalListView> {
               title: widget.title,
               subtitle: widget.subtitle,
             ),
+          const SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: ListView.builder(
               controller: scrollController,

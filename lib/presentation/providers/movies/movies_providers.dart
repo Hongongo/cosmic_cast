@@ -2,10 +2,19 @@ import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'package:cosmic_cast/presentation/providers/movies/movies_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//* now playing movies provider
 final nowPlayingMoviesProvider =
     StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
   final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies,
+  );
+});
 
+//* popular movies provider
+final popularMoviesProvider =
+    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getPopular;
   return MoviesNotifier(
     fetchMoreMovies: fetchMoreMovies,
   );
