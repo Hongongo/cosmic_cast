@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'package:cosmic_cast/presentation/delegates/search_movie_delegate.dart';
 import 'package:cosmic_cast/presentation/providers/providers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomAppbar extends ConsumerWidget {
   const CustomAppbar({super.key});
@@ -35,12 +39,15 @@ class CustomAppbar extends ConsumerWidget {
                 onPressed: () {
                   final movieRepository = ref.read(movieRepositoryProvider);
 
-                  showSearch(
+                  showSearch<Movie?>(
                     context: context,
                     delegate: SearchMovieDelegate(
                       searchMovieCallback: movieRepository.searchMovies,
                     ),
-                  );
+                  ).then((mov) {
+                    if (mov == null) return;
+                     if(context.mounted) context.push('/movie/${mov.id}');
+                  });
                 },
                 icon: const Icon(
                   Icons.search,
