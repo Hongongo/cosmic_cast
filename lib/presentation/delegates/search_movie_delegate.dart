@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:animate_do/animate_do.dart';
 
+import 'package:cosmic_cast/config/helpers/human_formats.dart';
 import 'package:cosmic_cast/domain/entities/movie.dart';
 
 typedef SearchMovieCallback = Future<List<Movie>> Function(String query);
@@ -91,7 +92,7 @@ class _MovieItem extends StatelessWidget {
           SizedBox(
             width: size.width * 0.2,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 movie.posterPath,
                 loadingBuilder: (context, child, loadingProgress) =>
@@ -119,6 +120,27 @@ class _MovieItem extends StatelessWidget {
                     : Text(
                         movie.overview,
                       ),
+                Row(
+                  children: [
+                    //* star icon
+                    Icon(
+                      Icons.star_half_rounded,
+                      color: Colors.yellow.shade800,
+                    ),
+
+                    const SizedBox(
+                      width: 5,
+                    ),
+
+                    //* rating number
+                    Text(
+                      HumanFormats.number(movie.voteAverage, 1),
+                      style: textStyles.bodyMedium!.copyWith(
+                        color: Colors.yellow.shade900,
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           )
