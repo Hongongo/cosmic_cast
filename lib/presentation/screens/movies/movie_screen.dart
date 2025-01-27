@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/providers.dart';
@@ -91,6 +92,10 @@ class _CustomSliverAppbar extends StatelessWidget {
               child: Image.network(
                 movie.posterPath,
                 fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) return const SizedBox();
+                  return FadeIn(child: child);
+                },
               ),
             ),
 
@@ -156,6 +161,10 @@ class _MovieDetails extends StatelessWidget {
                 child: Image.network(
                   movie.posterPath,
                   width: size.width * 0.3,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress != null) return const SizedBox();
+                    return FadeIn(child: child);
+                  },
                 ),
               ),
 
@@ -248,19 +257,25 @@ class _ActorsByMovie extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //* actor photo
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    actor.profilePath,
-                    height: 180,
-                    width: 135,
-                    fit: BoxFit.cover,
-                    // TODO: replace place holder with error image
-                    errorBuilder: (context, error, stackTrace) =>
-                        const SizedBox(
+                FadeInRight(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      actor.profilePath,
                       height: 180,
                       width: 135,
-                      child: Placeholder(),
+                      fit: BoxFit.cover,
+                       loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) return const SizedBox();
+                      return FadeIn(child: child);
+                    },
+                      // TODO: replace place holder with error image
+                      errorBuilder: (context, error, stackTrace) =>
+                          const SizedBox(
+                        height: 180,
+                        width: 135,
+                        child: Placeholder(),
+                      ),
                     ),
                   ),
                 ),
