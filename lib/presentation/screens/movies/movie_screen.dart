@@ -4,8 +4,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/providers.dart';
-import 'package:cosmic_cast/presentation/providers/movies/movie_info_provider.dart';
 import 'package:cosmic_cast/domain/entities/movie.dart';
+import 'package:cosmic_cast/presentation/widgets/shared/custom_gradient.dart';
+import 'package:cosmic_cast/presentation/providers/movies/movie_info_provider.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-screen';
@@ -80,6 +81,16 @@ class _CustomSliverAppbar extends StatelessWidget {
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
       shadowColor: Colors.red,
+      actions: [
+        IconButton(
+          onPressed: () {},
+          // icon: Icon(Icons.favorite_border),
+          icon: const Icon(
+            Icons.favorite_rounded,
+            color: Colors.red,
+          ),
+        ),
+      ],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(
           horizontal: 10,
@@ -102,36 +113,35 @@ class _CustomSliverAppbar extends StatelessWidget {
             ),
 
             //* gradiente imagen
-            const SizedBox.expand(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.7, 1.0],
-                    colors: [
-                      Colors.transparent,
-                      Colors.black87,
-                    ],
-                  ),
-                ),
-              ),
+            const CustomGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.8, 1.0],
+              colors: [
+                Colors.transparent,
+                Colors.black54,
+              ],
+            ),
+
+            //* gradiente favorite btn
+            const CustomGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.0, 0.2],
+              colors: [
+                Colors.black54,
+                Colors.transparent,
+              ],
             ),
 
             //* gradiente back btn
-            const SizedBox.expand(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    stops: [0.0, 0.3],
-                    colors: [
-                      Colors.black87,
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-              ),
+            const CustomGradient(
+              begin: Alignment.topLeft,
+              stops: [0.0, 0.2],
+              colors: [
+                Colors.black87,
+                Colors.transparent,
+              ],
             ),
           ],
         ),
