@@ -24,6 +24,15 @@
 - Cache store
 
 -
+ ## Sccion 15:
+- Search delegate
+- Api query
+- Debounncer
+- Streams
+- Builders
+- DRY
+
+-
 ## Extra:
 - Animate_do
 - Peticiones http
