@@ -245,68 +245,71 @@ class _ActorsByMovie extends ConsumerWidget {
 
     final actors = actorsByMovie[movieId]!;
 
-    return SizedBox(
-      height: 300,
-      width: double.infinity,
-      child: ListView.separated(
-        itemCount: actors.length,
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (context, index) {
-          return const SizedBox(width: 10); // Adds padding of 16 pixels
-        },
-        itemBuilder: (BuildContext context, int index) {
-          final actor = actors[index];
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: SizedBox(
+        height: 300,
+        width: double.infinity,
+        child: ListView.separated(
+          itemCount: actors.length,
+          scrollDirection: Axis.horizontal,
+          separatorBuilder: (context, index) {
+            return const SizedBox(width: 10); // Adds padding of 16 pixels
+          },
+          itemBuilder: (BuildContext context, int index) {
+            final actor = actors[index];
 
-          return SizedBox(
-            width: 135,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //* actor photo
-                FadeInRight(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      actor.profilePath,
-                      height: 180,
-                      width: 135,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress != null) return const SizedBox();
-                        return FadeIn(child: child);
-                      },
-                      // TODO: replace place holder with error image
-                      errorBuilder: (context, error, stackTrace) =>
-                          const SizedBox(
+            return SizedBox(
+              width: 135,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //* actor photo
+                  FadeInRight(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        actor.profilePath,
                         height: 180,
                         width: 135,
-                        child: Placeholder(),
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress != null) return const SizedBox();
+                          return FadeIn(child: child);
+                        },
+                        // TODO: replace place holder with error image
+                        errorBuilder: (context, error, stackTrace) =>
+                            const SizedBox(
+                          height: 180,
+                          width: 135,
+                          child: Placeholder(),
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  actor.name,
-                  maxLines: 2,
-                ),
-                Text(
-                  actor.character ?? '',
-                  maxLines: 2,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis,
+                  const SizedBox(
+                    height: 5,
                   ),
-                ),
+                  Text(
+                    actor.name,
+                    maxLines: 2,
+                  ),
+                  Text(
+                    actor.character ?? '',
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
 
-                //* nombre
-              ],
-            ),
-          );
-        },
+                  //* nombre
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
