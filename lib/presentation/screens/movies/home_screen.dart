@@ -5,15 +5,27 @@ import 'package:cosmic_cast/presentation/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   static const name = 'home-screen';
+  final int pageIndex;
 
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+    required this.pageIndex,
+  });
+
+  final viewRoutes = const <Widget>[
+    HomeView(),
+    SizedBox(),
+    FavoritesView(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: HomeView(),
-      bottomNavigationBar: CustomBottomNavigation(),
+    return  Scaffold(
+      body: IndexedStack(
+        index: pageIndex,
+        children: viewRoutes,
+      ),
+      bottomNavigationBar:  CustomBottomNavigation(),
     );
   }
 }
-
