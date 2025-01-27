@@ -50,6 +50,24 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text('sugg');
+    return FutureBuilder(
+      future: searchMovieCallback(query),
+      builder: (context, snapshot) {
+        final movies = snapshot.data ?? [];
+
+        return ListView.builder(
+          itemCount: movies.length,
+          itemBuilder: (BuildContext context, int index) {
+            final movie = movies[index];
+
+            return ListTile(
+              title: Text(
+                movie.title,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
