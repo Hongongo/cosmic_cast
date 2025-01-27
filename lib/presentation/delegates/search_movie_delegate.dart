@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:animate_do/animate_do.dart';
@@ -9,10 +10,33 @@ typedef SearchMovieCallback = Future<List<Movie>> Function(String query);
 
 class SearchMovieDelegate extends SearchDelegate<Movie?> {
   final SearchMovieCallback searchMovieCallback;
+  StreamController<List<Movie>> debounceMovies = StreamController.broadcast();
+  Timer? _debounceTimer;
 
   SearchMovieDelegate({
     required this.searchMovieCallback,
   });
+
+  void clearStreams() {
+    debounceMovies.close();
+  }
+
+  void _onQueryChanged(String query) {
+    if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+
+    _debounceTimer = Timer(
+      const Duration(milliseconds: 500),
+      () async {
+        if (query.isEmpty) {
+          debounceMovies.add([]);
+          return;
+        }
+
+        final movies = await searchMovieCallback(query);
+        debounceMovies.add(movies);
+      },
+    );
+  }
 
   @override
   String? get searchFieldLabel => 'Search movie';
@@ -37,7 +61,10 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      onPressed: () => close(context, null),
+      onPressed: () {
+        clearStreams();
+        close(context, null);
+      },
       icon: const Icon(
         Icons.arrow_back_ios_new_rounded,
       ),
@@ -46,13 +73,15 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('results');
+    return const Text('results');
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder(
-      future: searchMovieCallback(query),
+    _onQueryChanged(query);
+    
+    return StreamBuilder(
+      stream: debounceMovies.stream,
       builder: (context, snapshot) {
         final movies = snapshot.data ?? [];
 
@@ -63,7 +92,10 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
             return _MovieItem(
               movie: movie,
-              onMovieSelected: close,
+              onMovieSelected: (context, movie) {
+                clearStreams();
+                close(context, movie);
+              },
             );
           },
         );
