@@ -1,6 +1,6 @@
 # Tech Used
 ---
-## Sección 12:
+ ## Nb->Ex 16:
 - Datasources
 - Repositorios
 - Modelos
@@ -9,14 +9,14 @@
 - Mappers
 
 -
-## Sección 13:
+ ## Nb->Ex 16:
 - Riverpod
 - Clean architecture
 - Clean code
 - Solid
 
 -
- ## Sccion 14:
+  ## Nb->Ex 16:
 - Go router 
 - Rutas
 - Argumentos entre pantallas
@@ -24,7 +24,7 @@
 - Cache store
 
 -
- ## Seccion 15:
+ ## Nb->Ex 16:
 - Search delegate
 - Api query
 - Debounncer
@@ -33,7 +33,7 @@
 - DRY
 
 -
- ## Seccion 16:
+ ## Nb->Ex 16:
 - Tab Navigation
 - Save state
 - Go_router
@@ -41,6 +41,15 @@
     - ShellRoute
     - SubShellRoute
 - Indexed stack
+
+
+-
+ ## Nb->Ex 16:
+- Local DB
+- Favorite handle
+- Masonry
+- Schemas
+- Isar
 
 -
 ## Extra:
