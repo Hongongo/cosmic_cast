@@ -24,7 +24,7 @@
 - Cache store
 
 -
- ## Sccion 15:
+ ## Seccion 15:
 - Search delegate
 - Api query
 - Debounncer
