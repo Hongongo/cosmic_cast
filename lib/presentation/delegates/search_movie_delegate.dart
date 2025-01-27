@@ -37,6 +37,31 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
     });
   }
 
+  Widget buildResultsAndSuggestions() {
+    return StreamBuilder(
+      initialData: initialMovies,
+      stream: debounceMovies.stream,
+      builder: (context, snapshot) {
+        final movies = snapshot.data ?? [];
+
+        return ListView.builder(
+          itemCount: movies.length,
+          itemBuilder: (BuildContext context, int index) {
+            final movie = movies[index];
+
+            return _MovieItem(
+              movie: movie,
+              onMovieSelected: (context, movie) {
+                clearStreams();
+                close(context, movie);
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -69,56 +94,13 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return StreamBuilder(
-      initialData: initialMovies,
-      stream: debounceMovies.stream,
-      builder: (context, snapshot) {
-        final movies = snapshot.data ?? [];
-
-        return ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (BuildContext context, int index) {
-            final movie = movies[index];
-
-            return _MovieItem(
-              movie: movie,
-              onMovieSelected: (context, movie) {
-                clearStreams();
-                close(context, movie);
-              },
-            );
-          },
-        );
-      },
-    );
+    return buildResultsAndSuggestions();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     _onQueryChanged(query);
-
-    return StreamBuilder(
-      initialData: initialMovies,
-      stream: debounceMovies.stream,
-      builder: (context, snapshot) {
-        final movies = snapshot.data ?? [];
-
-        return ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (BuildContext context, int index) {
-            final movie = movies[index];
-
-            return _MovieItem(
-              movie: movie,
-              onMovieSelected: (context, movie) {
-                clearStreams();
-                close(context, movie);
-              },
-            );
-          },
-        );
-      },
-    );
+    return buildResultsAndSuggestions();
   }
 }
 
