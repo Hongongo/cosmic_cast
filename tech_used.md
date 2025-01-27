@@ -40,6 +40,7 @@
     - Redirect
     - ShellRoute
     - SubShellRoute
+- Indexed stack
 
 -
 ## Extra:
