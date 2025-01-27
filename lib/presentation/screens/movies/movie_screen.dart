@@ -96,6 +96,8 @@ class _CustomSliverAppbar extends StatelessWidget {
                   if (loadingProgress != null) return const SizedBox();
                   return FadeIn(child: child);
                 },
+                errorBuilder: (context, error, stackTrace) =>
+                    const Placeholder(),
               ),
             ),
 
@@ -165,6 +167,10 @@ class _MovieDetails extends StatelessWidget {
                     if (loadingProgress != null) return const SizedBox();
                     return FadeIn(child: child);
                   },
+                  errorBuilder: (context, error, stackTrace) => SizedBox(
+                    width: size.width * 0.3,
+                    child: const Placeholder(),
+                  ),
                 ),
               ),
 
@@ -265,10 +271,10 @@ class _ActorsByMovie extends ConsumerWidget {
                       height: 180,
                       width: 135,
                       fit: BoxFit.cover,
-                       loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress != null) return const SizedBox();
-                      return FadeIn(child: child);
-                    },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress != null) return const SizedBox();
+                        return FadeIn(child: child);
+                      },
                       // TODO: replace place holder with error image
                       errorBuilder: (context, error, stackTrace) =>
                           const SizedBox(
