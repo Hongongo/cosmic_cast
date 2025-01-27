@@ -46,10 +46,12 @@
 -
  ## Nb->Ex 16:
 - Local DB
+    - Read, write, delete
 - Favorite handle
 - Masonry
 - Schemas
 - Isar
+- Riverpod future provider
 
 -
 ## Extra:
