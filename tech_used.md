@@ -33,6 +33,15 @@
 - DRY
 
 -
+ ## Seccion 16:
+- Tab Navigation
+- Save state
+- Go_router
+    - Redirect
+    - ShellRoute
+    - SubShellRoute
+
+-
 ## Extra:
 - Animate_do
 - Peticiones http
