@@ -1,9 +1,10 @@
-import 'package:cosmic_cast/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../providers/providers.dart';
 import 'package:cosmic_cast/presentation/providers/movies/movie_info_provider.dart';
+import 'package:cosmic_cast/domain/entities/movie.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-screen';
@@ -25,6 +26,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     super.initState();
 
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
+    ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
   }
 
   @override
@@ -81,14 +83,6 @@ class _CustomSliverAppbar extends StatelessWidget {
         titlePadding: const EdgeInsets.symmetric(
           horizontal: 10,
           vertical: 5,
-        ),
-        title: Text(
-          movie.title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
-          textAlign: TextAlign.start,
         ),
         background: Stack(
           children: [
@@ -207,12 +201,92 @@ class _MovieDetails extends StatelessWidget {
           ),
         ),
 
-        // TODO: agregar actores
+        _ActorsByMovie(movieId: movie.id.toString()),
 
         const SizedBox(
           height: 100,
         ),
       ],
+    );
+  }
+}
+
+class _ActorsByMovie extends ConsumerWidget {
+  final String movieId;
+
+  const _ActorsByMovie({
+    required this.movieId,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final actorsByMovie = ref.watch(actorsByMovieProvider);
+
+    if (actorsByMovie[movieId] == null) {
+      return const CircularProgressIndicator(
+        strokeWidth: 2,
+      );
+    }
+
+    final actors = actorsByMovie[movieId]!;
+
+    return SizedBox(
+      height: 300,
+      width: double.infinity,
+      child: ListView.separated(
+        itemCount: actors.length,
+        scrollDirection: Axis.horizontal,
+        separatorBuilder: (context, index) {
+          return const SizedBox(width: 10); // Adds padding of 16 pixels
+        },
+        itemBuilder: (BuildContext context, int index) {
+          final actor = actors[index];
+
+          return SizedBox(
+            width: 135,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //* actor photo
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    actor.profilePath,
+                    height: 180,
+                    width: 135,
+                    fit: BoxFit.cover,
+                    // TODO: replace place holder with error image
+                    errorBuilder: (context, error, stackTrace) =>
+                        const SizedBox(
+                      height: 180,
+                      width: 135,
+                      child: Placeholder(),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  actor.name,
+                  maxLines: 2,
+                ),
+                Text(
+                  actor.character ?? '',
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+
+                //* nombre
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
