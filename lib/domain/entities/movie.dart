@@ -4,7 +4,7 @@ part 'movie.g.dart';
 
 @collection
 class Movie {
-  Id isarId;
+  Id? isarId;
   final bool adult;
   final String backdropPath;
   final List<String> genreIds;
